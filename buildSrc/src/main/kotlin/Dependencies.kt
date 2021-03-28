@@ -12,7 +12,7 @@ object Dependencies {
     }
 
     object Gradle {
-        const val androidBuildPlugin = "com.android.tools.build:gradle:7.0.0-alpha10"
+        const val androidBuildPlugin = "com.android.tools.build:gradle:7.0.0-alpha12"
         const val hiltPlugin = "com.google.dagger:hilt-android-gradle-plugin:$daggerHiltVersion"
         const val kotlinPlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Kotlin.version}"
         const val kotlinSerializationPlugin= "org.jetbrains.kotlin:kotlin-serialization:${Kotlin.version}"
@@ -48,11 +48,15 @@ object Dependencies {
         const val viewModel = "androidx.lifecycle:lifecycle-viewmodel-compose:1.0.0-alpha03"
         const val hiltNavigation = "androidx.hilt:hilt-navigation-compose:1.0.0-alpha01"
         const val constraintLayout = "androidx.constraintlayout:constraintlayout-compose:1.0.0-alpha05"
+        const val navigation = "androidx.navigation:navigation-compose:1.0.0-alpha09"
     }
 
     object Hilt {
+        private const val version = "1.0.0-alpha02"
         const val android = "com.google.dagger:hilt-android:$daggerHiltVersion"
         const val androidCompiler = "com.google.dagger:hilt-android-compiler:$daggerHiltVersion"
+        const val viewModel = "androidx.hilt:hilt-lifecycle-viewmodel:$version"
+        const val hiltCompiler = "androidx.hilt:hilt-compiler:$version"
     }
 
     object Retrofit {

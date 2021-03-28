@@ -42,7 +42,7 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.window.Dialog
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltNavGraphViewModel
 import com.yasinkacmaz.jetflix.R
 import com.yasinkacmaz.jetflix.ui.common.loading.LoadingRow
 import com.yasinkacmaz.jetflix.util.transformation.SizeTransformation
@@ -61,7 +61,7 @@ private val LocalSizeTransformation = staticCompositionLocalOf<SizeTransformatio
 @OptIn(ExperimentalCoroutinesApi::class)
 @Composable
 fun SettingsContent(onDialogDismiss: () -> Unit) {
-    val settingsViewModel: SettingsViewModel = viewModel()
+    val settingsViewModel = hiltNavGraphViewModel<SettingsViewModel>()
     settingsViewModel.fetchLanguages()
     val uiState = settingsViewModel.uiState.collectAsState().value
     val selectedLanguage = settingsViewModel.selectedLanguage.collectAsState(initial = Language.default)

@@ -4,6 +4,7 @@ plugins {
     id("com.android.application")
     id("kotlin-android")
     id("kotlin-kapt")
+    id("kotlin-parcelize")
     id("kotlinx-serialization")
     id("dagger.hilt.android.plugin")
 }
@@ -96,11 +97,14 @@ dependencies {
     implementation(Dependencies.Compose.activity)
     implementation(Dependencies.Compose.viewModel)
     implementation(Dependencies.Compose.hiltNavigation)
+    implementation(Dependencies.Compose.navigation)
     debugImplementation(Dependencies.Compose.tooling)
 
     // Hilt
     implementation(Dependencies.Hilt.android)
     kapt(Dependencies.Hilt.androidCompiler)
+    implementation(Dependencies.Hilt.viewModel)
+    kapt(Dependencies.Hilt.hiltCompiler)
 
     // Network
     implementation(Dependencies.Retrofit.retrofit)

@@ -1,5 +1,6 @@
 package com.yasinkacmaz.jetflix.ui.main.moviedetail
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yasinkacmaz.jetflix.service.MovieService

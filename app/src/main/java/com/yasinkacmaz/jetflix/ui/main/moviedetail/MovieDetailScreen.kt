@@ -67,16 +67,18 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import androidx.constraintlayout.compose.ConstraintLayout
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.core.os.bundleOf
+import androidx.hilt.navigation.compose.hiltNavGraphViewModel
+import androidx.navigation.compose.navigate
 import com.yasinkacmaz.jetflix.R
 import com.yasinkacmaz.jetflix.data.Genre
 import com.yasinkacmaz.jetflix.ui.common.error.ErrorColumn
 import com.yasinkacmaz.jetflix.ui.common.loading.LoadingColumn
+import com.yasinkacmaz.jetflix.ui.main.main.LocalNavController
 import com.yasinkacmaz.jetflix.ui.main.moviedetail.credits.Credits
 import com.yasinkacmaz.jetflix.ui.main.moviedetail.image.Image
 import com.yasinkacmaz.jetflix.ui.main.moviedetail.person.Person
-import com.yasinkacmaz.jetflix.ui.navigation.LocalNavigator
-import com.yasinkacmaz.jetflix.ui.navigation.Screen
+import com.yasinkacmaz.jetflix.ui.navigation.Route
 import com.yasinkacmaz.jetflix.ui.widget.BottomArcShape
 import com.yasinkacmaz.jetflix.ui.widget.SpacedRow
 import com.yasinkacmaz.jetflix.util.FetchDominantColorFromPoster
@@ -89,7 +91,7 @@ val LocalDominantColor = compositionLocalOf<MutableState<Color>> { error("No dom
 
 @Composable
 fun MovieDetailScreen(movieId: Int) {
-    val movieDetailViewModel: MovieDetailViewModel = viewModel(key = movieId.toString())
+    val movieDetailViewModel: MovieDetailViewModel = hiltNavGraphViewModel()
     val movieDetailUiState = movieDetailViewModel.uiState.collectAsState().value
     DisposableEffect(Unit) {
         if (movieDetailUiState.movieDetail == null) {
@@ -121,10 +123,10 @@ private fun AppBar(modifier: Modifier, homepage: String?) {
         horizontalArrangement = Arrangement.SpaceBetween,
         modifier = modifier
     ) {
-        val navigator = LocalNavigator.current
+        val navController = LocalNavController.current
         val dominantColor = LocalDominantColor.current.value
         val scaleModifier = Modifier.scale(1.1f)
-        IconButton(onClick = { navigator.goBack() }) {
+        IconButton(onClick = { navController.popBackStack() }) {
             Icon(
                 Icons.Filled.ArrowBack,
                 contentDescription = stringResource(R.string.back_icon_content_description),
@@ -281,10 +283,16 @@ fun MovieDetail(movieDetail: MovieDetail, credits: Credits, images: List<Image>)
                 }
         )
 
-        val navigator = LocalNavigator.current
+        val navController = LocalNavController.current
         MovieSection(
             credits.cast,
-            { SectionHeaderWithDetail(R.string.cast) { navigator.navigateTo(Screen.PeopleGrid(credits.cast)) } },
+            {
+                SectionHeaderWithDetail(R.string.cast) {
+                    navController.navigate("${Route.PEOPLE_GRID.route}/{people}") {
+                        bundleOf("people" to credits.cast.toTypedArray())
+                    }
+                }
+            },
             { Person(it, Modifier.width(140.dp)) },
             Modifier.constrainAs(cast) {
                 top.linkTo(overview.bottom, 16.dp)
@@ -295,7 +303,13 @@ fun MovieDetail(movieDetail: MovieDetail, credits: Credits, images: List<Image>)
 
         MovieSection(
             credits.crew,
-            { SectionHeaderWithDetail(R.string.crew) { navigator.navigateTo(Screen.PeopleGrid(credits.crew)) } },
+            {
+                SectionHeaderWithDetail(R.string.crew) {
+                    navController.navigate(Route.PEOPLE_GRID.route) {
+                        bundleOf("people" to credits.crew.toTypedArray())
+                    }
+                }
+            },
             { Person(it, Modifier.width(140.dp)) },
             Modifier.constrainAs(crew) {
                 top.linkTo(cast.bottom, 16.dp)
@@ -306,7 +320,13 @@ fun MovieDetail(movieDetail: MovieDetail, credits: Credits, images: List<Image>)
 
         MovieSection(
             images,
-            { SectionHeaderWithDetail(R.string.images) { navigator.navigateTo(Screen.Images(images = images)) } },
+            {
+                SectionHeaderWithDetail(R.string.images) {
+                    navController.navigate(Route.IMAGES.route) {
+                        bundleOf("images" to images.toTypedArray())
+                    }
+                }
+            },
             { MovieImage(it) },
             Modifier.constrainAs(imagesSection) {
                 top.linkTo(crew.bottom, 16.dp)

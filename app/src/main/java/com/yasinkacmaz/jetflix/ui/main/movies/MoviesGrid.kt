@@ -15,7 +15,9 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.core.os.bundleOf
+import androidx.hilt.navigation.compose.hiltNavGraphViewModel
+import androidx.navigation.compose.navigate
 import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
@@ -25,17 +27,17 @@ import com.yasinkacmaz.jetflix.ui.common.error.ErrorColumn
 import com.yasinkacmaz.jetflix.ui.common.error.ErrorRow
 import com.yasinkacmaz.jetflix.ui.common.loading.LoadingColumn
 import com.yasinkacmaz.jetflix.ui.common.loading.LoadingRow
+import com.yasinkacmaz.jetflix.ui.main.main.LocalNavController
 import com.yasinkacmaz.jetflix.ui.main.movie.Movie
 import com.yasinkacmaz.jetflix.ui.main.movie.MovieContent
-import com.yasinkacmaz.jetflix.ui.navigation.LocalNavigator
-import com.yasinkacmaz.jetflix.ui.navigation.Screen.MovieDetail
+import com.yasinkacmaz.jetflix.ui.navigation.Route
 import dev.chrisbanes.accompanist.insets.LocalWindowInsets
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
 @Composable
 fun MoviesGrid() {
-    val moviesViewModel = viewModel<MoviesViewModel>()
+    val moviesViewModel = hiltNavGraphViewModel<MoviesViewModel>()
     val movies = moviesViewModel.movies.collectAsLazyPagingItems()
     val state = rememberLazyListState()
     val filterStateChanges = moviesViewModel.filterStateChanges
@@ -54,9 +56,9 @@ private fun LazyMoviesGrid(
     moviePagingItems: LazyPagingItems<Movie>,
     state: LazyListState
 ) {
-    val navigator = LocalNavigator.current
+    val navController = LocalNavController.current
     val onMovieClicked: (Int) -> Unit = { movieId ->
-        navigator.navigateTo(MovieDetail(movieId))
+        navController.navigate("${Route.MOVIE_DETAIL.route}/$movieId")
     }
     LazyVerticalGrid(
         cells = GridCells.Fixed(2),

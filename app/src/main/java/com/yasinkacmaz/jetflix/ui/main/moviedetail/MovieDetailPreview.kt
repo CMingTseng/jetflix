@@ -1,20 +1,15 @@
 package com.yasinkacmaz.jetflix.ui.main.moviedetail
 
-import androidx.activity.OnBackPressedDispatcher
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.tooling.preview.Preview
 import com.yasinkacmaz.jetflix.data.Genre
 import com.yasinkacmaz.jetflix.ui.main.moviedetail.credits.Credits
 import com.yasinkacmaz.jetflix.ui.main.moviedetail.credits.Gender
 import com.yasinkacmaz.jetflix.ui.main.moviedetail.credits.Person
 import com.yasinkacmaz.jetflix.ui.main.moviedetail.image.Image
-import com.yasinkacmaz.jetflix.ui.navigation.Navigator
-import com.yasinkacmaz.jetflix.ui.navigation.LocalNavigator
-import com.yasinkacmaz.jetflix.ui.navigation.Screen
 import com.yasinkacmaz.jetflix.util.randomColor
 
 @Preview
@@ -43,11 +38,7 @@ private fun MovieDetailPreview() {
     )
     val person = Person(profilePhotoUrl = "", name = "Yasin", role = "Android Developer", gender = Gender.MALE)
     val credits = Credits(cast = listOf(person, person, person), crew = listOf(person, person, person))
-    val navigator = Navigator<Screen>(Screen.Movies, LocalLifecycleOwner.current, OnBackPressedDispatcher {})
-    CompositionLocalProvider(
-        LocalDominantColor provides mutableStateOf(Color.randomColor()),
-        LocalNavigator provides navigator
-    ) {
+    CompositionLocalProvider(LocalDominantColor provides mutableStateOf(Color.randomColor())) {
         val images = listOf(Image("", 1), Image("", 1), Image("", 1))
         MovieDetail(movieDetail = movieDetail, credits = credits, images = images)
     }

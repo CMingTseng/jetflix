@@ -1,5 +1,5 @@
 object Dependencies {
-    const val agp_version = "7.1.0-alpha02"//7.1.0-alpha02
+    const val agp_version = "4.1.2"//7.1.0-alpha02
     const val android_tools_build_version = agp_version
     const val kotlin_version = "1.5.10"
     const val kotlinx_serialization_version = "1.2.0"//1.2.0

@@ -35,6 +35,7 @@ subprojects {
             kotlinOptions {
                 jvmTarget = JavaVersion.VERSION_1_8.toString()
                 allWarningsAsErrors = true
+                useIR = true
                 freeCompilerArgs = listOf(*freeCompilerArgs.toTypedArray(), "-Xopt-in=kotlin.RequiresOptIn")
             }
         }
@@ -59,7 +60,7 @@ tasks.withType<Test>().configureEach {
 // Change gradleVersion and run gradlew wrapper to properly update gradle wrapper
 tasks.named<Wrapper>("wrapper") {
     distributionType = Wrapper.DistributionType.BIN
-    gradleVersion = "7.0.2"
+    gradleVersion = "4.1.2"
 }
 
 task("clean", Delete::class) {

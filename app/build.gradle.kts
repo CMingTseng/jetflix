@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.plugin.PLUGIN_CLASSPATH_CONFIGURATION_NAME
+
 plugins {
     id("com.android.application")
     id("kotlin-android")
@@ -22,10 +24,6 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
 
-    buildFeatures {
-        compose = true
-    }
-
     composeOptions {
         kotlinCompilerExtensionVersion = Dependencies.Compose.version
     }
@@ -46,7 +44,7 @@ android {
     }
 
     packagingOptions.apply {
-        resources.excludes.addAll(
+        excludes.addAll(
             listOf(
                 "**/attach_hotspot_windows.dll",
                 "META-INF/licenses/**",
@@ -73,6 +71,7 @@ dependencies {
     implementation(Dependencies.AndroidX.Ktx.core)
 
     // Compose
+    add(PLUGIN_CLASSPATH_CONFIGURATION_NAME, "androidx.compose.compiler:compiler:${Dependencies.Compose.version}")
     implementation(Dependencies.Compose.runtime)
     implementation(Dependencies.Compose.foundation)
     implementation(Dependencies.Compose.layout)

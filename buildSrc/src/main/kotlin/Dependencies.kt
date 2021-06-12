@@ -32,7 +32,7 @@ object Dependencies {
 
     object Kotlin {
         const val version = kotlin_version
-        const val stdLib = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${version}"
+        const val stdLib = "org.jetbrains.kotlin:kotlin-stdlib:${version}"
         const val jsonSerialization = "org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlinx_serialization_version"
     }
 

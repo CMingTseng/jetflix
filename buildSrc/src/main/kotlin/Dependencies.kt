@@ -12,7 +12,7 @@ object Dependencies {
     const val compose_activity_version = "1.3.0-beta01"
     const val compose_appcompat_version = "1.3.0"
     const val compose_constraintlayout_version = "1.0.0-alpha07"
-    const val compose_navigation_version = "1.0.0-alpha10"
+    const val compose_navigation_version = "2.4.0-alpha02"
     const val compose_lifecycle_version = "1.0.0-alpha06"
     const val compose_accompanist_version = "0.11.1"
 
